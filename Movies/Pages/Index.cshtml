@@ -14,7 +14,7 @@
 
         @foreach (Movie movie in Model.Movies)
         {
-            <div class="movie-entry">
+            <div class="movie-entry" data-title="@movie.Title" data-mpaa="@movie.MPAA_Rating" data-imdb="@movie.IMDB_Rating" >
                 <h2>
                     @movie.Title
                     @if (movie.Release_Year != null)
@@ -42,27 +42,27 @@
             </div>
         }
     </div>
-    <form method="post">
+    <form method="post" id="search-and-filter">
         <input type="text" name="search" value="@Model.search" />
         <input type="submit" value="Search" />
-        <label>
-            <input type="checkbox" value="G" name="mpaa" checked="@Model.mpaa.Contains("G")" />
+        <label> 
+            <input type="checkbox" value="G" class="mpaa" name="mpaa" checked="@Model.mpaa.Contains("G")" />
             Rated G
         </label>
         <label>
-            <input type="checkbox" value="PG" name="mpaa" checked="@Model.mpaa.Contains("PG")" />
+            <input type="checkbox" value="PG" class="mpaa" name="mpaa" checked="@Model.mpaa.Contains("PG")" />
             Rated PG
         </label>
         <label>
-            <input type="checkbox" value="PG-13" name="mpaa" checked="@Model.mpaa.Contains("PG-13")" />
+            <input type="checkbox" value="PG-13" class="mpaa" name="mpaa" checked="@Model.mpaa.Contains("PG-13")" />
             Rated PG-13
         </label>
         <label>
-            <input type="checkbox" value="R" name="mpaa" checked="@Model.mpaa.Contains("R")" />
+            <input type="checkbox" value="R" class="mpaa" name="mpaa" checked="@Model.mpaa.Contains("R")" />
             Rated R
         </label>
         <label>
-            <input type="checkbox" value="NC-17" name="mpaa" checked="@Model.mpaa.Contains("NC-17")" />
+            <input type="checkbox" value="NC-17" class="mpaa" name="mpaa" checked="@Model.mpaa.Contains("NC-17")" />
             Rated NC-17
         </label>
 

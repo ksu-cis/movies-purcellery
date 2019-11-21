@@ -10,29 +10,32 @@ namespace Movies
     /// <summary>
     /// A class representing a database of movies
     /// </summary>
-    public class MovieDatabase
+    public static class MovieDatabase
     {
-        private List<Movie> movies = new List<Movie>();
+        private static List<Movie> movies;
 
         /// <summary>
         /// Loads the movie database from the JSON file
         /// </summary>
-        public MovieDatabase() {
-            
-            using (StreamReader file = System.IO.File.OpenText("movies.json"))
-            {
-                string json = file.ReadToEnd();
-                movies = JsonConvert.DeserializeObject<List<Movie>>(json);
+
+        public static List<Movie> All { get {
+                if (movies == null)
+                {
+                    using (StreamReader file = System.IO.File.OpenText("movies.json"))
+                    {
+                        string json = file.ReadToEnd();
+                        movies = JsonConvert.DeserializeObject<List<Movie>>(json);
+                    }
+                }
+                return movies;
             }
         }
 
-        public List<Movie> All { get { return movies; } }
-
-        public List<Movie> Search(string term)
+        public static List<Movie> Search(string term, List<Movie> mov)
         {
             List<Movie> result = new List<Movie>();
 
-            foreach (Movie movie in movies)
+            foreach (Movie movie in mov)
             {
                 if (movie.Title.Contains(term, StringComparison.OrdinalIgnoreCase)
                     || (movie.Director != null && movie.Director.Contains(term, StringComparison.OrdinalIgnoreCase)))
@@ -43,7 +46,7 @@ namespace Movies
             return result;
         }
 
-        public List<Movie> FilterByMPAA(List<Movie> movies, List<string> mpaa)
+        public static List<Movie> FilterByMPAA(List<Movie> movies, List<string> mpaa)
         {
             List<Movie> result = new List<Movie>();
 
@@ -58,7 +61,7 @@ namespace Movies
             return result;
         }
 
-        public List<Movie> FilterByMinIMDB(List<Movie> movies, float min)
+        public static List<Movie> FilterByMinIMDB(List<Movie> movies, float min)
         {
             List<Movie> result = new List<Movie>();
 
